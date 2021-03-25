@@ -48,4 +48,8 @@ function generateRatings() {
 
 
 
-export default JSON.parse(fs.readFileSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), "final-ratings.json"), "utf-8"))
+export default {
+    get_book_ratings: function () {
+        return JSON.parse(fs.readFileSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), "final-ratings.json"), "utf-8"))
+    }
+}
