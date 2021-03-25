@@ -19,26 +19,30 @@ function readCSV(stream_loc, functor) {
     });
 }
 
-
-
-export default readCSV('./BX-Books.csv', (data) => {
-    results[data.ISBN] = data;
-    results[data.ISBN].ratings = []
-}).then((book_data) => {
+function generateRatings() {
+    readCSV('./BX-Books.csv', (data) => {
+        results[data.ISBN] = data;
+        results[data.ISBN].ratings = []
+    }).then((book_data) => {
         return readCSV('./BX-Book-Ratings.csv', (data) => {
-            if ( book_data[data.ISBN] && data.BookRating > 0) {
+            if (book_data[data.ISBN] && data.BookRating > 0) {
                 book_data[data.ISBN].ratings.push(parseInt(data.BookRating));
             }
         })
     })
-    .then((rated_books) => {
-        return Object.values(rated_books)
-            .filter((book) => book.ratings.length > 0)
-            .map((book) => {
-                book.NumRatings = book.ratings.length;
-                book.AverageScore = book.ratings.reduce((x,y) => x+y) / book.ratings.length;
-                return book;
-            })
-    });
+        .then((rated_books) => {
+            return Object.values(rated_books)
+                .filter((book) => book.ratings.length > 0)
+                .map((book) => {
+                    book.NumRatings = book.ratings.length;
+                    book.AverageScore = book.ratings.reduce((x, y) => x + y) / book.ratings.length;
+                    return book;
+                })
+        }).then((final_ratings) => {
+        fs.writeFileSync("final-ratings.json", JSON.stringify(final_ratings))
+    })
+}
 
 
+
+export default JSON.parse(fs.readFileSync("final-ratings.json", "utf-8"))
