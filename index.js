@@ -1,6 +1,7 @@
 
 
 import fs from 'fs';
+import path from 'path';
 import csv from 'csv-parser'
 
 
@@ -45,4 +46,4 @@ function generateRatings() {
 
 
 
-export default JSON.parse(fs.readFileSync("final-ratings.json", "utf-8"))
+export default JSON.parse(fs.readFileSync(path.resolve(__dirname, "final-ratings.json"), "utf-8"))
