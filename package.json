@@ -1,0 +1,18 @@
+{
+  "name": "book-ratings",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mobetz/book-ratings"
+  },
+  "scripts": {
+    "start": "node .",
+    "publish": "publish-to-git"
+  },
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "publish-to-git": "^1.1.9"
+  }
+}
